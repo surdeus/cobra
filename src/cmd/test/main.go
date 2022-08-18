@@ -1,7 +1,7 @@
 package main
 
 import (
-	garbo "github.com/surdeus/garbo/src/api"
+	garbo "github.com/surdeus/cobra/src/api"
 	"log"
 	"fmt"
 )

@@ -1,4 +1,4 @@
-module github.com/surdeus/garbo
+module github.com/surdeus/cobra
 
 go 1.18
 
