@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"fmt"
 	"errors"
+	"strings"
 )
 
 type Key = string
@@ -109,6 +110,33 @@ func (db *DB)HasNot(s []Key) int {
 	i = db.checkSubDir(s)
 
 	return i
+}
+
+func (db *DB)List(s []Key) (chan Key, error) {
+	var (
+		fname, suf string
+		has bool
+	)
+
+	has = db.Has(s)
+	if !has {
+		return nil, ErrNotExist
+	}
+
+	suf = db.config.EntrySuffix
+	c := make(chan Key)
+	go func() {
+		files, _ := os.ReadDir(db.formPath(s, ""))
+		for _, f := range files {
+			fname = f.Name()
+			if strings.HasSuffix(fname, suf) {
+				c <- strings.TrimSuffix(fname, suf)
+			}
+		}
+		close(c)
+	}()
+
+	return c, nil
 }
 
 func (db *DB) Get(s []Key, v any) error {

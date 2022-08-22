@@ -35,6 +35,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	db.Set(db.Path("key1", "key4"), Q{5, 6})
+	db.Set(db.Path("key1", "key5"), Q{7, 8})
 	err = db.Get(db.SPath([]string{"key1", "key2"}), &q1)
 	if err != nil {
 		log.Fatal(err)
@@ -47,4 +50,11 @@ func main() {
 	fmt.Println(db.HasNot(db.Path("key1", "key3")))
 	fmt.Printf("%d %d\n", q.X, q.Y)
 	fmt.Printf("%d %d\n", q1.X, q1.Y)
+	keys, err := db.List(db.Path("key1"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	for v := range keys {
+		fmt.Println(v)
+	}
 }
