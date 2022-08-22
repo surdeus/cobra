@@ -88,6 +88,29 @@ func (db *DB) Set(s []Key, v any) error {
 	return nil
 }
 
+func (db *DB)Has(s []Key) bool {
+	var (
+		i int
+	)
+
+	i = db.checkSubDir(s)
+	if i >= 0 {
+		return false
+	}
+
+	return true
+}
+
+func (db *DB)HasNot(s []Key) int {
+	var (
+		i int
+	)
+
+	i = db.checkSubDir(s)
+
+	return i
+}
+
 func (db *DB) Get(s []Key, v any) error {
 	if len(s) == 0 || db.KeyIsEmpty(s[len(s)-1]) {
 		return ErrEmptyKey
@@ -106,3 +129,4 @@ func (db *DB) Stop() error {
 	db.running = false
 	return nil
 }
+

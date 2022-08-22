@@ -40,6 +40,11 @@ func main() {
 		log.Fatal(err)
 	}
 
+	fmt.Println(db.Has(db.Path("key1")))
+	fmt.Println(db.Has(db.Path("key1", "key2")))
+	fmt.Println(db.Has(db.Path("key3")))
+	fmt.Println(db.HasNot(db.Path("key3")))
+	fmt.Println(db.HasNot(db.Path("key1", "key3")))
 	fmt.Printf("%d %d\n", q.X, q.Y)
 	fmt.Printf("%d %d\n", q1.X, q1.Y)
 }
